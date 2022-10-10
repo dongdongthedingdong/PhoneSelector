@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>import SwiftUI
+import PlaygroundSupport
+struct PhoneOnlineMarket: View{
+    let samsungGalaxyS20: Double = 999.9
+    let iPhone13: Double = 799.8
+    let redmiNote10: Double = 285.6
+    let samsungGalaxyA7: Double = 243.5
+    let iPhoneX: Double = 679.7
+    let samsungGalaxyZFlip3: Double = 1181.2
+    let lGV40: Double = 323.4
+    let xiaoMiMIXFold: Double = 1508.1
+    let iPhone12: Double = 799.8
+    let samsungGalaxyZFold3: Double = 1799.3
+    let taxRate: Double = 0.2
+    
+    @State private var amountOfsamsungGalaxyS20: Int = 0
+    @State private var amountOfiPhone13: Int = 0
+    @State private var amountOfredmiNote10: Int = 0
+    @State private var amountOfsamsungGalaxyA7: Int = 0
+    @State private var amountOfiPhoneX: Int = 0
+    @State private var amountOfsamsungGalaxyZFlip3: Int = 0
+    @State private var amountOflGV40: Int = 0
+    @State private var amountOfxiaoMiMIXFold: Int = 0
+    @State private var amountOfiPhone12: Int = 0
+    @State private var amountOfsamsungGalaxyZFold3: Int = 0
+    @State private var orderSubmitted: Bool = false
+    
+    var totalCostBeforeTax: Double{
+        return calculateSubtotal(amountOfsamsungGalaxyS20: amountOfsamsungGalaxyS20, amountOfiPhone13: amountOfiPhone13, amountOfredmiNote10: amountOfredmiNote10, amountOfsamsungGalaxyA7: amountOfsamsungGalaxyA7, amountOfiPhoneX: amountOfiPhoneX, amountOfsamsungGalaxyZFlip3: amountOfsamsungGalaxyZFlip3, amountOflGV40: amountOflGV40, amountOfxiaoMiMIXFold: amountOfxiaoMiMIXFold, amountOfiPhone12: amountOfiPhone12, amountOfsamsungGalaxyZFold3: amountOfsamsungGalaxyZFold3)
+    }
+    
+    func calculateSubtotal(amountOfsamsungGalaxyS20: Int, amountOfiPhone13: Int, amountOfredmiNote10: Int, amountOfsamsungGalaxyA7: Int, amountOfiPhoneX: Int, amountOfsamsungGalaxyZFlip3: Int, amountOflGV40: Int, amountOfxiaoMiMIXFold: Int, amountOfiPhone12: Int, amountOfsamsungGalaxyZFold3: Int)-&gt; Double{
+        
+        var subTotal = Double(amountOfsamsungGalaxyS20)*samsungGalaxyS20 + Double(amountOfiPhone13)*iPhone13 + Double(amountOfredmiNote10)*redmiNote10 + Double(amountOfsamsungGalaxyA7)*samsungGalaxyA7 + Double(amountOfiPhoneX)*iPhoneX + Double(amountOfsamsungGalaxyZFlip3)*samsungGalaxyZFlip3 + Double(amountOflGV40)*lGV40 + Double(amountOfxiaoMiMIXFold)*xiaoMiMIXFold + Double(amountOfiPhone12)*iPhone12 + Double(amountOfsamsungGalaxyZFold3)*samsungGalaxyZFold3
+        return subTotal
+    }
+    
+    var taxAmount: Double{
+        return calculateTax(amount: totalCostBeforeTax)
+    }
+    
+    func calculateTax(amount: Double)-&gt; Double{
+        return amount*taxRate
+    }
+    
+    var totalWithTax: Double{
+        return taxAmount + totalCostBeforeTax
+    }
+    
+    func showCurrency(amount: Double)-&gt; String{
+        return String(format: "%.02f", amount)
+    }
+    
+    func makePurchase(){
+        orderSubmitted = true
+    }
+    
+    func incrementsamsungGalaxyS20(){
+        amountOfsamsungGalaxyS20 += 1
+    }
+    
+    func decrementsamsungGalaxyS20(){
+        if (amountOfsamsungGalaxyS20 &gt; 0){
+            amountOfsamsungGalaxyS20 -= 1
+        }
+    }
+    
+    func incrementiPhone13(){
+        amountOfiPhone13 += 1
+    }
+    
+    func decrementiPhone13(){
+        if (amountOfiPhone13 &gt; 0){
+            amountOfiPhone13 -= 1
+        }
+    }
+    
+    func incrementredmiNote10(){
+        amountOfredmiNote10 += 1
+    }
+    
+    func decrementredmiNote10(){
+        if (amountOfredmiNote10 &gt; 0){
+            amountOfredmiNote10 -= 1
+        }
+    }
+    
+    func incrementsamsungGalaxyA7(){
+        amountOfsamsungGalaxyA7 += 1
+    }
+    
+    func decrementsamsungGalaxyA7(){
+        if (amountOfsamsungGalaxyA7 &gt; 0){
+            amountOfsamsungGalaxyA7 -= 1
+        }
+    }
+    
+    func incrementiPhoneX(){
+        amountOfiPhoneX += 1
+    }
+    
+    func decrementiPhoneX(){
+        if (amountOfiPhoneX &gt; 0){
+            amountOfiPhoneX -= 1
+        }
+    }
+    
+    func incrementsamsungGalaxyZFlip3(){
+        amountOfsamsungGalaxyZFlip3 += 1
+    }
+    
+    func decrementsamsungGalaxyZFlip3(){
+        if (amountOfsamsungGalaxyZFlip3 &gt; 0){
+            amountOfsamsungGalaxyZFlip3 -= 1
+        }
+    }
+    
+    func incrementlGV40(){
+        amountOflGV40 += 1
+    }
+    
+    func decrementlGV40(){
+        if (amountOflGV40 &gt; 0){
+            amountOflGV40 -= 1
+        }
+    }
+    
+    func incrementxiaoMiMIXFold(){
+        amountOfxiaoMiMIXFold += 1
+    }
+    
+    func decrementxiaoMiMIXFold(){
+        if (amountOfxiaoMiMIXFold &gt; 0){
+            amountOfxiaoMiMIXFold -= 1
+        }
+    }
+    
+    func incrementiPhone12(){
+        amountOfiPhone12 += 1
+    }
+    
+    func decrementiPhone12(){
+        if (amountOfiPhone12 &gt; 0){
+            amountOfiPhone12 -= 1
+        }
+    }
+    
+    func incrementsamsungGalaxyZFold3(){
+        amountOfsamsungGalaxyZFold3 += 1
+    }
+    
+    func decrementsamsungGalaxyZFold3(){
+        if (amountOfsamsungGalaxyZFold3 &gt; 0){
+            amountOfsamsungGalaxyZFold3 -= 1
+        }
+    }
+    var body: some View{
+        VStack{
+            Text("Welcome to the Online Mobile Phone Store!")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.yellow)
+                .font(.title)
+            
+            Group{
+            Stepper(onIncrement: incrementsamsungGalaxyS20, onDecrement: decrementsamsungGalaxyS20){
+                Text("Samsung Galaxy S20: \(self.amountOfsamsungGalaxyS20)")
+            }
+            
+            Stepper(onIncrement: incrementiPhone13, onDecrement: decrementiPhone13){
+                Text("iPhone 13: \(self.amountOfiPhone13)")
+            }
+            
+            Stepper(onIncrement: incrementredmiNote10, onDecrement: decrementredmiNote10){
+                Text("Redmi Note 10: \(self.amountOfredmiNote10)")
+            }
+            
+            Stepper(onIncrement: incrementsamsungGalaxyA7, onDecrement: decrementsamsungGalaxyA7){
+                Text("Samsung Galaxy A7: \(self.amountOfsamsungGalaxyA7)")
+            }
+            
+            Stepper(onIncrement: incrementiPhoneX, onDecrement: decrementiPhoneX){
+                Text("iPhone X: \(self.amountOfiPhoneX)")
+            }
+            
+            Stepper(onIncrement: incrementsamsungGalaxyZFlip3, onDecrement: decrementsamsungGalaxyZFlip3){
+                Text("Samsung Galaxy Z Flip 3: \(self.amountOfsamsungGalaxyZFlip3)")
+            }
+            
+            Stepper(onIncrement: incrementlGV40, onDecrement: decrementlGV40){
+                Text("LG V40: \(self.amountOflGV40)")
+            }
+            
+            Stepper(onIncrement: incrementxiaoMiMIXFold, onDecrement: decrementxiaoMiMIXFold){
+                Text("Xiao Mi MIX Fold: \(self.amountOfxiaoMiMIXFold)")
+            }
+            
+            Stepper(onIncrement: incrementiPhone12, onDecrement: decrementiPhone12){
+                Text("iPhone 12: \(self.amountOfiPhone12)")
+            }
+            
+            Stepper(onIncrement: incrementsamsungGalaxyZFold3, onDecrement: decrementsamsungGalaxyZFold3){
+                Text("Samsung Galaxy Z Fold 3: \(self.amountOfsamsungGalaxyZFold3)")
+            }
+            }
+            Text("Subtotal: $\(showCurrency(amount: totalCostBeforeTax))")
+            Text("Tax (20%) $\(showCurrency(amount: taxAmount))")
+            Text ("Total: $\(showCurrency(amount: totalWithTax))")
+            
+            if (orderSubmitted == false){
+                Button("Complete Purchase", action: makePurchase)
+            }
+            else if(totalCostBeforeTax &gt; 0){
+                Text("Thank you for your purchase")
+                    .font(.title)
+            }
+        }
+    }
+    }
+PlaygroundPage.current.setLiveView(PhoneOnlineMarket())
+</string>
+			<key>ModifiedRange</key>
+			<string>{0, 7694}</string>
+			<key>OriginalContent</key>
+			<string>
+</string>
+			<key>OriginalRange</key>
+			<string>{0, 1}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>import Foundation
+
+public struct Phone: Identifiable {
+    public var id = UUID()
+    public var name: String
+    public var phoneType: String
+    public var mobilememoryStorage: Int
+    public var phoneMass: Double
+    public var phonebatteryPower: Int
+    public var phonereleaseYear: Int
+    public var cost: Double
+    public var bestSeller: Bool
+    public var image: String?
+}
+
+public let testData = [
+    Phone(name: "Samsung Galaxy S20", phoneType: "Android", mobilememoryStorage: 128, phoneMass: 169, phonebatteryPower: 4000, phonereleaseYear: 2020, cost: 999, bestSeller: true, image: "S20.jpeg"),
+    Phone(name: "iPhone 13", phoneType: "iOS", mobilememoryStorage: 128, phoneMass: 173, phonebatteryPower: 3227, phonereleaseYear: 2021, cost: 799, bestSeller: true, image: "iPhone 13.png"),
+    Phone(name: "Redmi Note 10", phoneType: "Android", mobilememoryStorage: 128, phoneMass: 178.8, phonebatteryPower: 5000, phonereleaseYear: 2021, cost: 285, bestSeller: false, image: "Redmi Note 10.png"),
+    Phone(name: "Samsung Galaxy A7", phoneType: "Android", mobilememoryStorage: 64, phoneMass: 168, phonebatteryPower: 3300, phonereleaseYear: 2018, cost: 243, bestSeller: false, image: "A7.webp"),
+    Phone(name: "iPhone X", phoneType: "iOS", mobilememoryStorage: 64, phoneMass: 174, phonebatteryPower: 2716, phonereleaseYear: 2017, cost: 679, bestSeller: false, image: "iPhone X.png"),
+    Phone(name: "Samsung Galaxy Z Flip 3", phoneType: "Android", mobilememoryStorage: 256, phoneMass: 183, phonebatteryPower: 3300, phonereleaseYear: 2021, cost: 1181, bestSeller: true, image: "Z Flip 3.jpeg"),
+    Phone(name: "LG V40", phoneType: "Android", mobilememoryStorage: 128, phoneMass: 169, phonebatteryPower: 3300, phonereleaseYear: 2018, cost: 323, bestSeller: false, image: "Lg V40.jpeg"),
+    Phone(name: "Xiao Mi MIX Fold", phoneType: "Android", mobilememoryStorage: 256, phoneMass: 332, phonebatteryPower: 5020, phonereleaseYear: 2021, cost: 1508, bestSeller: true, image: "Xiaomi MI Mix Fold.png"),
+    Phone(name: "iPhone 12", phoneType: "iOS", mobilememoryStorage: 128, phoneMass: 162, phonebatteryPower: 2815, phonereleaseYear: 2020, cost: 799, bestSeller: false, image: "iPhone 12.png"),
+    Phone(name: "Samsung Galaxy Z Fold 3", phoneType: "Android", mobilememoryStorage: 512, phoneMass: 271, phonebatteryPower: 4400, phonereleaseYear: 2021, cost: 1799, bestSeller: true, image: "Z Fold 3.jpeg")
+]
+
+import SwiftUI
+import PlaygroundSupport
+
+struct PhonesApp: View{
+    var phones: [Phone] = []
+    var body: some View{
+        NavigationView{
+        List{
+            ForEach(phones){ phone in
+                PhoneCell(phone:phone)
+            }
+            HStack{
+                Spacer()
+                Text("\(phones.count) Phones")
+                .foregroundColor(.secondary)
+                Spacer()
+            }
+        }
+        .navigationBarTitle("Phones")
+            Text("Select a phone")
+                .font(.largeTitle)
+        }
+    }
+}
+struct PhoneDetail: View{
+    var phone: Phone
+    @State private var zoomed = false
+    var body: some View{
+        VStack{
+            Spacer(minLength:0)
+            if let imageFile = phone.image{
+                Image(uiImage: UIImage(named: imageFile)!)
+                    .resizable()
+                    .aspectRatio(contentMode: zoomed ? .fill : .fit)
+                    .onTapGesture {
+                        withAnimation{
+                            self.zoomed.toggle()
+        }
+                    }
+                Spacer()
+                Text("Mobile Memory Storage: \(phone.mobilememoryStorage)")
+                Text("Mass: \(phone.phoneMass) grams")
+                Text("Battery Power: \(phone.phonebatteryPower) mAH")
+                Text("Release Year: \(phone.phonereleaseYear)")
+                Text("Cost: $\(phone.cost)")
+                Spacer(minLength: 0)
+                if phone.bestSeller &amp;&amp; !zoomed{
+                    Spacer(minLength:0)
+                    HStack{
+                        Spacer()
+                        Text("Best Seller")
+                        Spacer()
+                    }
+                    .padding(.all)
+                    .font(Font.headline.smallCaps())
+                    .background(Color.red)
+                    .foregroundColor(.yellow)
+                    .transition(.move(edge: .bottom))
+                }
+                if(phone.cost&gt;=0 &amp;&amp; phone.cost&lt;500){
+                    Spacer(minLength:0)
+                    HStack{
+                        Spacer()
+                        Text("Cheap")
+                        Spacer()
+                    }
+                    .padding(.all)
+                    .font(Font.headline.smallCaps())
+                    .background(Color.green)
+                    .foregroundColor(.yellow)
+                    .transition(.move(edge: .bottom))
+                }
+                else if(phone.cost&gt;=500 &amp;&amp; phone.cost&lt;1000){
+                    Spacer(minLength:0)
+                    HStack{
+                        Spacer()
+                        Text("Affordable")
+                        Spacer()
+                    }
+                    .padding(.all)
+                    .font(Font.headline.smallCaps())
+                    .background(Color.blue)
+                    .foregroundColor(.yellow)
+                    .transition(.move(edge: .bottom))
+                }
+                else{
+                    Spacer(minLength:0)
+                    HStack{
+                        Spacer()
+                        Text("Expensive")
+                        Spacer()
+                    }
+                    .padding(.all)
+                    .font(Font.headline.smallCaps())
+                    .background(Color.black)
+                    .foregroundColor(.white)
+                    .transition(.move(edge: .bottom))
+                }
+                }
+                }
+                .navigationBarTitle(phone.name)
+                    .edgesIgnoringSafeArea(.bottom)
+        }
+        }
+
+struct PhoneCell: View{
+    var phone: Phone
+    var body: some View{
+        NavigationLink(destination: PhoneDetail(phone:phone)){
+            HStack{
+                if let imageFile = phone.image{
+                    Image(uiImage: UIImage(named: imageFile)!)
+                        .resizable().frame(width:75, height:60)
+                        .aspectRatio(contentMode:.fit)
+                }
+                    VStack{
+                Text(phone.name)
+                Text("\(phone.phoneType)")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            }
+            }
+    }
+}
+PlaygroundPage.current.setLiveView(PhonesApp(phones: testData))
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 6708}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

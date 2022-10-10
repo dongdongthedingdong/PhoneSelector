@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>import SpriteKit
+import PlaygroundSupport
+
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
+    
+    let characterSprite = SKSpriteNode(imageNamed: "when-your-friend-has-money.jpeg")
+    let factorySprite = SKSpriteNode(imageNamed: "factory.png")
+    let factorySprite2 = SKSpriteNode(imageNamed: "factory.png")
+    let factorySprite3 = SKSpriteNode(imageNamed: "factory.png")
+    let carbonDioxide = SKSpriteNode(imageNamed: "Carbon Dioxide.png")
+    let scoreLabel = SKLabelNode(text: "Score: 0")
+    var waveLabel = SKLabelNode(text: "Wave: 1")
+    var frameCount = 0
+    var currentScore:Int = 0
+    let beanCategory:UInt32 = 0b01001
+    let co2Category:UInt32 = 0b00001
+    
+    
+    override func didMove(to view: SKView) {
+        
+        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: 1.0)
+        self.physicsWorld.contactDelegate = self
+        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+        
+        drawcharacterSprite()
+        drawfactorySprite()
+        drawfactorySprite2()
+        drawfactorySprite3()
+        drawcarbonDioxide()
+        drawscoreLabel()
+        drawwaveLabel()
+}
+    
+    override func touchesBegan(_ touches: Set&lt;UITouch&gt;, with event: UIEvent?) {
+        
+        for touch in touches{
+            let location = touch.location(in:self)
+            if(location.x &lt; characterSprite.position.x &amp;&amp; touch.tapCount &lt;= 1){
+                
+                characterSprite.physicsBody?.velocity.dx = -50
+                
+            }
+            else if(location.x &gt; characterSprite.position.x &amp;&amp; touch.tapCount &lt;= 1){
+                
+                characterSprite.physicsBody?.velocity.dx = 50
+                
+            }
+            else{
+                characterSprite.physicsBody?.velocity.dx = 0
+            }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set&lt;UITouch&gt;, with event: UIEvent?) {
+        
+        for touch in touches{
+            let location = touch.location(in:self)
+            
+            if(location.y&gt;characterSprite.position.y &amp;&amp; touch.tapCount &gt; 1){
+                characterSprite.physicsBody?.velocity.dy = 50
+            }
+            else if(location.y&lt;characterSprite.position.y &amp;&amp; touch.tapCount &gt; 1){
+                characterSprite.physicsBody?.velocity.dy = -50
+            }
+            else{
+                characterSprite.physicsBody?.velocity.dy = 0
+            }
+            
+        }
+    
+    }
+    func didBegin(_ contact: SKPhysicsContact) {
+        let bodyA = contact.bodyA.node!
+        let bodyB = contact.bodyB.node!
+        
+        let contactType = bodyA.physicsBody!.categoryBitMask | bodyB.physicsBody!.categoryBitMask
+        
+        let beanContactCo2 = beanCategory | co2Category
+        if(contactType == beanContactCo2){
+            if(bodyA.name == "Carbon Dioxide"){
+                bodyA.removeFromParent()
+            }
+            else{
+                bodyB.removeFromParent()
+                currentScore += 10
+                scoreLabel.text = "Score: \(currentScore)"
+            }
+    }
+    }
+    
+    override func didFinishUpdate(){
+        
+        if(frameCount &gt; 150){
+            frameCount = 0
+            let newcarbonDioxide = SKSpriteNode(imageNamed: "Carbon Dioxide.png")
+            newcarbonDioxide.size = CGSize(width:150,height:130)
+            newcarbonDioxide.position = CGPoint(x:220,y: 120)
+            newcarbonDioxide.physicsBody = SKPhysicsBody(rectangleOf:carbonDioxide.size)
+            newcarbonDioxide.physicsBody?.allowsRotation = false
+            newcarbonDioxide.physicsBody?.isDynamic = true
+            newcarbonDioxide.physicsBody?.categoryBitMask = co2Category
+            newcarbonDioxide.physicsBody?.contactTestBitMask = beanCategory
+            newcarbonDioxide.name = "Carbon Dioxide"
+            
+            self.addChild(newcarbonDioxide)
+        }
+        else{
+            frameCount += 1
+        }
+        if(currentScore &gt; 100){
+            if(frameCount &gt; 100){
+                frameCount = 0
+                let newcarbonDioxide = SKSpriteNode(imageNamed: "Carbon Dioxide.png")
+                newcarbonDioxide.size = CGSize(width:150,height:130)
+                newcarbonDioxide.position = CGPoint(x:220,y: 120)
+                newcarbonDioxide.physicsBody = SKPhysicsBody(rectangleOf:carbonDioxide.size)
+                newcarbonDioxide.physicsBody?.allowsRotation = false
+                newcarbonDioxide.physicsBody?.isDynamic = true
+                newcarbonDioxide.physicsBody?.categoryBitMask = co2Category
+                newcarbonDioxide.physicsBody?.contactTestBitMask = beanCategory
+                newcarbonDioxide.name = "Carbon Dioxide"
+                waveLabel.text = "Wave 2"
+                self.addChild(newcarbonDioxide)
+            }
+            else{
+                frameCount += 1
+            }
+            
+        }
+    }
+    
+    
+func drawcharacterSprite(){
+    characterSprite.size = CGSize(width:120,height:120)
+    characterSprite.position = CGPoint(x:30,y:260)
+    characterSprite.physicsBody = SKPhysicsBody(rectangleOf:characterSprite.size)
+    characterSprite.physicsBody?.allowsRotation = false
+    characterSprite.physicsBody?.isDynamic = true
+    characterSprite.physicsBody?.affectedByGravity = false
+    characterSprite.physicsBody?.categoryBitMask = beanCategory
+    characterSprite.physicsBody?.contactTestBitMask = co2Category
+    characterSprite.name = "Mr Bean"
+    
+    self.addChild(characterSprite)
+    
+}
+    
+    func drawfactorySprite(){
+        factorySprite.size = CGSize(width:220,height:130)
+        factorySprite.position = CGPoint(x:120,y: 100)
+        factorySprite.physicsBody = SKPhysicsBody(rectangleOf:factorySprite.size)
+        factorySprite.physicsBody?.allowsRotation = false
+        factorySprite.physicsBody?.isDynamic = false
+        factorySprite.name = "Factory"
+        
+        self.addChild(factorySprite)
+    }
+    
+    func drawfactorySprite2(){
+        factorySprite2.size = CGSize(width:220,height:130)
+        factorySprite2.position = CGPoint(x:420,y: 100)
+        factorySprite2.physicsBody = SKPhysicsBody(rectangleOf:factorySprite2.size)
+        factorySprite2.physicsBody?.allowsRotation = false
+        factorySprite2.physicsBody?.isDynamic = false
+        factorySprite2.name = "Factory2"
+        
+        self.addChild(factorySprite2)
+    }
+    func drawfactorySprite3(){
+        factorySprite3.size = CGSize(width:220,height:130)
+        factorySprite3.position = CGPoint(x:265,y: 100)
+        factorySprite3.physicsBody = SKPhysicsBody(rectangleOf:factorySprite3.size)
+        factorySprite3.physicsBody?.allowsRotation = false
+        factorySprite3.physicsBody?.isDynamic = false
+        factorySprite3.name = "Factory3"
+        
+        self.addChild(factorySprite3)
+    }
+    
+    func drawcarbonDioxide(){
+        carbonDioxide.size = CGSize(width:150,height:130)
+        carbonDioxide.position = CGPoint(x:220,y: 120)
+        carbonDioxide.physicsBody = SKPhysicsBody(rectangleOf:carbonDioxide.size)
+        carbonDioxide.physicsBody?.allowsRotation = false
+        carbonDioxide.physicsBody?.isDynamic = true
+        carbonDioxide.physicsBody?.categoryBitMask = co2Category
+        carbonDioxide.physicsBody?.contactTestBitMask = beanCategory
+        carbonDioxide.name = "Carbon Dioxide"
+        
+        self.addChild(carbonDioxide)
+    }
+    
+    func drawscoreLabel(){
+        scoreLabel.fontSize = 20.0
+        scoreLabel.position = CGPoint(x:480,y:506
+        )
+        self.addChild(scoreLabel)
+    }
+    func drawwaveLabel(){
+        waveLabel.fontSize = 20.0
+        waveLabel.position = CGPoint(x:50,y:506
+        )
+        self.addChild(waveLabel)
+    }
+}
+
+let scene = GameScene(size:CGSize(width:525, height:525))
+scene.scaleMode = .aspectFit
+scene.backgroundColor = .gray
+let view = SKView(frame: CGRect(x:0, y:0, width:500, height:500))
+view.presentScene(scene)
+PlaygroundPage.current.liveView = view
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 7916}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
