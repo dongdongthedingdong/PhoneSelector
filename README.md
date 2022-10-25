@@ -1,6 +1,6 @@
 # PhoneSelector
 
-[![GitHub release](https://img.shields.io/github/release/dongdongthedingdong/PhoneSelector/PhoneSelector.svg)](https://GitHub.com/dongdongthedingdong/PhoneSelector/releases/)
+[![GitHub release](https://img.shields.io/github/release/dongdongthedingdong/PhoneSelector.svg)](https://GitHub.com/dongdongthedingdong/PhoneSelector/releases/)
 [![MIT license](https://img.shields.io/github/license/dongdongthedingdong/PhoneSelector)](https://dongdongthedingdong.mit-license.org/)
 
 Documentation of My Project from App Development Iterative Design
